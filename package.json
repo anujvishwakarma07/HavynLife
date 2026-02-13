@@ -1,0 +1,27 @@
+{
+  "name": "airbnb",
+  "version": "1.0.0",
+  "description": "This is my major project, It is going to build with the MERN Tech stack.",
+  "homepage": "https://github.com/anujvishwakarma07/Airbnd#readme",
+  "bugs": {
+    "url": "https://github.com/anujvishwakarma07/Airbnd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anujvishwakarma07/Airbnd.git"
+  },
+  "license": "ISC",
+  "author": "Anuj Vishwakarma",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "ejs-mate": "^4.0.0",
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.1.6"
+  }
+}

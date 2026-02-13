@@ -1,0 +1,72 @@
+<% layout("/layouts/boilerplate") %>
+<h2 class="offset-2">Create a new listing</h2>
+<br><br>
+<div class="row">
+  <div class="col-8 offset-2">
+    <form method="post" action="/listings">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="listing[title]"
+          placeholder="Add a catchy title"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input
+          name="listing[description]"
+          placeholder="Enter the description"
+          type="text"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Image URL</label>
+        <input
+          name="listing[image]"
+          placeholder="Enter the image url/link"
+          type="text"
+          class="form-control"
+        />
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            name="listing[price]"
+            placeholder="1200"
+            class="form-control"
+          />
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Country</label>
+          <input
+            type="text"
+            name="listing[country]"
+            placeholder="India"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          type="text"
+          name="listing[location]"
+          placeholder="Jaipur, Delhi, Noida"
+          class="form-control"
+        />
+      </div>
+      <br>
+      <button class="btn btn-dark add-btn">Add</button>
+      <br><br><br>
+    </form>
+  </div>
+</div>
