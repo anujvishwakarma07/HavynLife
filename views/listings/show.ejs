@@ -19,7 +19,7 @@
         <p class="card-text">
           <%= details.description %>
           <br />
-          &#8377;<%= details.price.toLocaleString("en-IN") %>
+          &#8377;<%= (details.price ?? 0).toLocaleString("en-IN") %>
           <br />
           <%= details.location %>
           <br />
@@ -34,7 +34,10 @@
   </div>
 
   <div class="btns">
-    <a href="/listings/<%= details._id %>/edit" class="btn btn-dark col-1 offset-3">
+    <a
+      href="/listings/<%= details._id %>/edit"
+      class="btn btn-dark col-1 offset-3"
+    >
       Edit
     </a>
     <form method="post" action="/listings/<%= details._id %>?_method=DELETE">
