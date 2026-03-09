@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") %>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <h1>Create Account</h1>
+      <p class="subtitle">Join the HavynLife community today.</p>
+
+      <form action="/signup" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input name="username" id="username" type="text" class="form-control" placeholder="Choose a username"
+            required />
+          <div class="invalid-feedback">Username is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required />
+          <div class="invalid-feedback">Please provide a valid email address.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label">Password</label>
+          <input name="password" id="password" type="password" class="form-control" placeholder="••••••••" required />
+          <div class="invalid-feedback">Password is required.</div>
+        </div>
+
+        <button class="btn-auth-submit">Create Account</button>
+      </form>
+
+      <div class="auth-separator">or</div>
+
+      <a href="/auth/google" class="btn-google">
+        <i class="fa-brands fa-google"></i>
+        Sign up with Google
+      </a>
+
+      <div class="auth-footer">
+        Already have an account? <a href="/login">Log in</a>
+      </div>
+    </div>
+  </div>

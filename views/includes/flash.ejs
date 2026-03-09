@@ -1,0 +1,61 @@
+<div class="flash-container">
+    <% if(success && success.length) { %>
+        <% for(let msg of success) { %>
+            <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+                <i class="fa-solid fa-circle-check"></i>
+                <div class="alert-message">
+                    <%= msg %>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="progress-bar-toast">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+
+    <% if(error && error.length) { %>
+        <% for(let msg of error) { %>
+            <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div class="alert-message">
+                    <%= msg %>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="progress-bar-toast">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+
+    <% if(fail && fail.length) { %>
+        <% for(let msg of fail) { %>
+            <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div class="alert-message">
+                    <%= msg %>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="progress-bar-toast">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+
+    <% if(notfound && notfound.length) { %>
+        <% for(let msg of notfound) { %>
+            <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div class="alert-message">
+                    <%= msg %>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="progress-bar-toast">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+</div>

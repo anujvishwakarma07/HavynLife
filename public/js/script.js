@@ -16,4 +16,20 @@
       form.classList.add('was-validated')
     }, false)
   })
+
+  // Flash Alert Auto-dismiss
+  const alerts = document.querySelectorAll('.custom-alert');
+  alerts.forEach(alert => {
+    // Set timeout to match the progress bar animation (5s)
+    setTimeout(() => {
+      const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      if (bsAlert) {
+        // Add hiding class for custom animation
+        alert.classList.add('hiding');
+        setTimeout(() => {
+          bsAlert.close();
+        }, 300); // Wait for slide out animation
+      }
+    }, 5000);
+  });
 })()
