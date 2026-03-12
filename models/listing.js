@@ -13,9 +13,8 @@ const listingSchema = Schema({
         type: String,
     },
     image: {
-        type: String,
-        default: "https://travelogyindia.b-cdn.net/storage/app/upload/taj-mahal-hotel.jpg",
-        set: (v) => v === "" ? "https://travelogyindia.b-cdn.net/storage/app/upload/taj-mahal-hotel.jpg" : v,
+        url: String,
+        filename: String,
     },
     price: {
         type: Number,
@@ -26,15 +25,31 @@ const listingSchema = Schema({
     country: {
         type: String
     },
+    category: {
+        type: String,
+        enum: ["Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic", "Domes"],
+        required: true
+    },
     reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: "Review",
         }
     ],
-    owner : {
-        type : Schema.Types.ObjectId,
-        ref : "User",
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }
 });
 

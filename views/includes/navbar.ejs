@@ -1,62 +1,154 @@
-<nav class="navbar navbar-expand-md sticky-top shadow-sm py-3">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="/listings">
-      <i class="fa-regular fa-compass me-2"></i>
-      <span class="fw-bold tracking-tight">HavynLife</span>
-    </a>
+<style>
+  .nav-top-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.55rem 0;
+    gap: 12px;
+  }
 
-    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  .search-pill {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 40px;
+    background: white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.25s, border-color 0.25s;
+    overflow: hidden;
+  }
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav me-auto ms-lg-4">
-        <a class="nav-link px-3" href="/listings">Explore</a>
-      </div>
+  .search-pill:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  }
 
-      <div class="navbar-nav ms-auto align-items-md-center gap-2 mt-3 mt-md-0">
-        <div class="search-container me-md-3">
-          <form class="d-flex" role="search" action="/listings" method="GET">
-            <div class="input-group input-group-sm rounded-pill border overflow-hidden bg-light shadow-sm">
-              <input class="form-control border-0 bg-transparent px-3" type="search" name="search"
-                placeholder="Search destinations" aria-label="Search">
-              <button class="btn btn-danger border-0 px-3 d-flex align-items-center justify-content-center"
-                type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </div>
-          </form>
+  .search-pill:focus-within {
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
+    border-color: #b0b0b0;
+  }
+
+  .search-pill input {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #222;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-pill input::placeholder {
+    color: #717171;
+    font-weight: 500;
+  }
+
+  .search-pill button {
+    background: linear-gradient(135deg, #ff385c 0%, #e31c5f 100%);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px 5px 3px 3px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .search-pill button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 2px 8px rgba(255, 56, 92, 0.3);
+  }
+</style>
+
+<nav class="navbar sticky-top bg-white border-bottom" style="z-index: 1020; padding: 0;">
+  <div class="container-fluid px-3 px-sm-4 px-md-5"
+    style="flex-direction: column; align-items: stretch; padding-top: 0; padding-bottom: 0;">
+
+    <div class="nav-top-row">
+
+      <a class="navbar-brand d-none d-md-flex align-items-center m-0 p-0" href="/listings"
+        style="flex: 1; flex-shrink: 0;">
+        <svg class="brand-icon-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+          style="width: 30px; height: 30px; fill: #ff385c; flex-shrink:0;">
+          <path
+            d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.01.415.001.228c0 4.062-2.877 6.478-6.357 6.478-2.224 0-4.556-1.258-6.709-3.386l-.257-.26-.172-.179h-.011l-.176.185c-2.044 2.1-4.393 3.405-6.701 3.405-3.48 0-6.358-2.416-6.358-6.478 0-1.141.27-2.123.863-3.768l.149-.396c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C12.537 1.963 13.992 1 16 1zm0 2c-1.239 0-2.053.539-2.987 2.21l-.523 1.008c-1.926 3.776-6.06 12.43-7.031 14.692l-.345.83c-.527 1.464-.738 2.256-.755 2.977l-.002.21c0 2.926 1.911 4.478 4.358 4.478 1.617 0 3.603-1.063 5.394-2.908l.247-.259.094-.1c.695-.741 1.258-1.554 1.55-2.23l.1-.242.067-.17c.507-.024.939-.148 1.294-.373l.247-.183.18-.16c.3-.284.516-.628.665-1.043l.063-.207.033-.146.068.172.03.088c.2.531.488 1.01.815 1.396l.247.262.247.228.094.1c1.791 1.845 3.777 2.908 5.394 2.908 2.447 0 4.358-1.552 4.358-4.478 0-.894-.213-1.692-.767-3.018l-.133-.314c-.971-2.261-5.105-10.916-7.031-14.692l-.523-1.008C18.053 3.539 17.24 3 16 3zm.01 10.316c.404 0 .806.103 1.202.308l.343.205c.712.441 1.092 1.204 1.144 2.103l.004.25c0 .355-.05.746-.226 1.432l-.066.23c-.31.956-.833 1.637-1.531 1.974l-.234.099-.184.053-.162.02c-.39-.02-.82-.128-1.284-.326l-.343-.205c-.655-.406-1.03-1.082-1.127-1.897l-.014-.23c-.011-.453.056-.913.237-1.637l.066-.23c.319-.982.854-1.674 1.571-2.012l.228-.094.195-.053c.125-.018.253-.027.382-.027z" />
+        </svg>
+        <span class="fw-bold ms-2 d-none d-lg-block"
+          style="color: #ff385c; font-size: 1.3rem; letter-spacing: -0.04em;">havynlife</span>
+      </a>
+
+      <form class="search-pill mx-auto" action="/listings" method="GET"
+        style="flex: 2; width: 100%; max-width: 400px; min-width: 0;">
+        <input type="text" name="q" placeholder="Where to?">
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 0.8rem; color: white;"></i>
+        </button>
+      </form>
+
+      <div class="d-flex align-items-center justify-content-end gap-1" style="flex: 1; flex-shrink: 0;">
+        <a class="nav-link nav-host-link d-none d-lg-block rounded-pill fw-bold" href="/listings/new"
+          style="font-size: 0.88rem; padding: 8px 14px; color: #222; white-space: nowrap;">
+          havynlife your home
+        </a>
+        <div class="nav-link globe-icon rounded-circle d-none d-lg-flex align-items-center justify-content-center"
+          style="width: 40px; height: 40px; cursor: pointer; color: #222;">
+          <i class="fa-solid fa-globe fs-5"></i>
         </div>
 
-        <div class="nav-auth-links d-flex align-items-center gap-2">
-          <% if(!currUser) { %>
-            <a class="nav-link fw-semibold px-3" href="/signup">Sign up</a>
-            <a class="nav-link btn btn-outline-dark rounded-pill px-4 ms-2 py-2" href="/login">Log in</a>
-            <% } else { %>
-              <a class="nav-link px-3 d-none d-lg-block" href="/listings/new">Airbnb your home</a>
-              <div class="dropdown">
-                <button class="btn btn-light border rounded-pill px-3 py-2 d-flex align-items-center shadow-sm"
-                  type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa-solid fa-bars me-2"></i>
-                  <div
-                    class="user-avatar-placeholder d-flex align-items-center justify-content-center bg-secondary text-white rounded-circle"
-                    style="width: 30px; height: 30px;">
-                    <i class="fa-solid fa-user" style="font-size: 0.8rem;"></i>
-                  </div>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 rounded-4 p-2">
-                  <li><a class="dropdown-item rounded-3 py-2 animate-hover" href="/listings/new"><b>Airbnb your
-                        home</b></a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item rounded-3 py-2" href="/logout">Log out</a></li>
-                </ul>
+        <div class="dropdown ms-1">
+          <button
+            class="user-menu-btn btn bg-white border rounded-pill d-flex align-items-center gap-2 px-2 py-1 shadow-sm"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="transition: box-shadow 0.2s; border-color: #dddddd !important;">
+            <i class="fa-solid fa-bars ps-1 text-muted" style="font-size: 0.95rem;"></i>
+            <% if(currUser) { %>
+              <div class="d-flex align-items-center justify-content-center bg-dark text-white rounded-circle fw-bold"
+                style="width: 28px; height: 28px; font-size: 0.8rem;">
+                <%= currUser.username.charAt(0).toUpperCase() %>
               </div>
-              <% } %>
+              <% } else { %>
+                <div class="d-flex align-items-center justify-content-center text-white bg-secondary rounded-circle"
+                  style="width: 28px; height: 28px;">
+                  <i class="fa-solid fa-user" style="font-size: 0.85rem;"></i>
+                </div>
+                <% } %>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end border-0 mt-2 rounded-4 py-2"
+            style="min-width: 220px; box-shadow: 0 8px 28px rgba(0,0,0,0.15);">
+            <% if(!currUser) { %>
+              <li><a class="dropdown-item fw-bold" href="/signup">Sign up</a></li>
+              <li><a class="dropdown-item mb-1" href="/login">Log in</a></li>
+              <li>
+                <hr class="dropdown-divider my-1">
+              </li>
+              <li><a class="dropdown-item" href="/listings/new">havynlife your home</a></li>
+              <li><a class="dropdown-item" href="#">Help Center</a></li>
+              <% } else { %>
+                <li class="px-3 py-1 mb-1">
+                  <span class="fw-bold" style="color: #222; font-size: 0.9rem;">Hello, <%= currUser.username %>!</span>
+                </li>
+                <li>
+                  <hr class="dropdown-divider my-1">
+                </li>
+                <li><a class="dropdown-item fw-bold" href="/listings/new">havynlife your home</a></li>
+                <li><a class="dropdown-item" href="#">Trips</a></li>
+                <li><a class="dropdown-item" href="#">Messages</a></li>
+                <li>
+                  <hr class="dropdown-divider my-1">
+                </li>
+                <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                <% } %>
+          </ul>
         </div>
       </div>
     </div>
+
   </div>
 </nav>

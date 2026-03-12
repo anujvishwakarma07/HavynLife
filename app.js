@@ -14,6 +14,7 @@ const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const cookie = require("cookie-parser");
 const passport = require('passport');
@@ -21,9 +22,23 @@ const LocalStrategy = require("passport-local");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require("./models/user");
 
+const DBurl = process.env.ATLASDB_URL;
+
+const store = (MongoStore.create ? MongoStore : MongoStore.default).create({
+    mongoUrl: DBurl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 60 * 60,
+})
+
+store.on("error", (err) => {
+    console.log("Session store error", err);
+})
 
 const sessionOptions = {
-    secret: "mysecretkey",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -32,7 +47,6 @@ const sessionOptions = {
         httpOnly: true,
     }
 }
-
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -63,7 +77,6 @@ if (process.env.GOOGLE_CLIENT_ID) {
                 let user = await User.findOne({ googleId: profile.id });
 
                 if (!user) {
-                    // Extract email if available
                     let email = profile.emails && profile.emails[0] ? profile.emails[0].value : `${profile.id}@google.com`;
                     user = await User.create({
                         googleId: profile.id,
@@ -82,16 +95,19 @@ if (process.env.GOOGLE_CLIENT_ID) {
     console.log("Warning: Google Client ID not found. Google Auth will be disabled.");
 }
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/havynLife";
+
 
 main().then(() => {
-    console.log("Database connected successfully");
+    console.log("Database connected");
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
 }).catch((err) => {
-    console.log(err);
-})
+    console.log("Connection error:", err);
+});
 
 async function main(params) {
-    await mongoose.connect(MONGO_URL)
+    await mongoose.connect(DBurl);
 }
 
 app.use((req, res, next) => {
@@ -100,23 +116,14 @@ app.use((req, res, next) => {
     res.locals.fail = req.flash("fail");
     res.locals.notfound = req.flash("notfound");
     res.locals.currUser = req.user;
+    res.locals.mapToken = process.env.MAP_TOKEN;
     next();
 })
 
-// root route
 app.get("/", (req, res) => {
-    res.send('<a href="/listings"><button>Go to Listing</button></a>');
+    res.redirect("/listings");
 });
 
-// app.get("/demouser", async (req, res) => {
-//     const demoUser = new User({
-//         email: "anujvishwakarma7077@gmail.com",
-//         username: "anujvishwakarma",
-//     });
-
-//     let registerUser = await User.register(demoUser, "password");
-//     res.send(registerUser);
-// })
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
@@ -134,6 +141,3 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`The app is listening on the port : ${port}`);
-});

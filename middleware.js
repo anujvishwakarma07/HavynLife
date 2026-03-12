@@ -15,8 +15,6 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.saveRedirectUrl = (req, res, next) => {
     if (req.session.redirectUrl) {
         res.locals.redirectUrl = req.session.redirectUrl;
-        // Optionally delete it from session to avoid lingering redirects
-        // delete req.session.redirectUrl; 
     }
     next();
 }
@@ -35,7 +33,6 @@ module.exports.isOwner = async (req, res, next) => {
     next();
 };
 
-//listing validation function
 module.exports.validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
     if (error) {
@@ -46,7 +43,6 @@ module.exports.validateListing = (req, res, next) => {
     }
 }
 
-//Review validation
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {

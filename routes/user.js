@@ -4,52 +4,22 @@ const User = require("../models/user");
 const wrapAsync = require("../utils/wrapAsync");
 const passport = require('passport');
 const { saveRedirectUrl } = require('../middleware');
+const userController = require('../controllers/users');
 
-router.get("/signup", (req, res) => {
-    res.render("users/signup");
-});
-
-router.post("/signup", wrapAsync(async (req, res, next) => {
-    try {
-        let { username, email, password } = req.body;
-        const newUser = new User({ email, username });
-        const registeredUser = await User.register(newUser, password);
-        req.login(registeredUser, (err) => {
-            if (err) {
-                return next(err);
-            }
-            req.flash("success", "Welcome to HavynLife!");
-            res.redirect("/listings");
-        });
-    } catch (e) {
-        req.flash("error", e.message);
-        res.redirect("/signup");
-    }
-}));
-
-router.get("/login", (req, res) => {
-    res.render("users/login");
-});
+router.route("/signup")
+.get(userController.renderSignupForm)
+.post(wrapAsync(userController.signup));
 
 
-router.post("/login", saveRedirectUrl, passport.authenticate("local", {
+router.route("/login")
+.get(userController.renderLoginForm)
+.post(saveRedirectUrl, passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true
-}), (req, res) => {
-    req.flash("success", "Welcome to HavynLife!");
-    let redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
-});
+}), userController.login);;
 
-router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash("success", "You are logged out!");
-        res.redirect("/listings");
-    });
-});
+
+router.get("/logout", userController.logout);
 
 //Initial request to google (trigger the login screen)
 router.get("/auth/google", passport.authenticate("google", {
@@ -57,11 +27,7 @@ router.get("/auth/google", passport.authenticate("google", {
 }));
 
 //Callback route (Handle the callback from google)
-router.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
-    req.flash("success", "Welcome to HavynLife!");
-    let redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
-})
+router.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), userController.renderGoogleCallback);             
 
 
 module.exports = router;
