@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' });
 const mongoose = require("mongoose");
 const initData = require("./data");
 const Listing = require("../models/listing");
@@ -9,17 +10,16 @@ main().then(() => {
 })
 
 async function main(params) {
-    await mongoose.connect("mongodb://127.0.0.1:27017/havynLife");
+    await mongoose.connect(process.env.ATLASDB_URL);
 }
 
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-require('dotenv').config({ path: '../.env' });
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 const initDB = async () => {
-    await Listing.deleteMany({});
-    const ownerId = "69ac603ec1a476a1142ccded";
+    // await Listing.deleteMany({});
+    const ownerId = "69b159afdd42e2889d43a06d";
 
     console.log("Geocoding listing locations and assigning categories... this may take a few seconds.");
 
@@ -52,7 +52,7 @@ const initDB = async () => {
     }
 
     await Listing.insertMany(initData.data);
-    console.log("Data was initialized with 29 premium listings.");
+    console.log(`Data was initialized with ${initData.data.length} premium listings.`);
     console.log(`All listings successfully assigned to Owner ID: ${ownerId} and geocoded.`);
 };
 
